@@ -125,10 +125,10 @@ small,.small{font-size:11px;color:var(--muted)}
   font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
   flex-shrink:0;
 }
-.offer-banner .vigencia input{
-  border:none;background:transparent;
+.offer-banner .vigencia .vig-wrap{position:relative;display:inline-block;min-width:96px;cursor:pointer}
+.offer-banner .vigencia strong{
   font-family:'Space Grotesk';font-size:13px;font-weight:700;color:var(--brand-deep);
-  text-align:center;padding:1px 0;outline:none;width:130px;
+  display:block;text-align:center;padding:1px 0;letter-spacing:.02em;
 }
 
 /* CARDS */
@@ -615,7 +615,7 @@ small,.small{font-size:11px;color:var(--muted)}
     border-bottom:1px solid #cdd6e3;font-size:11.5px;font-weight:600;color:#0A1B2E;
   }
   .exec-table input,.exec-table select{font-size:10px;font-weight:700;color:#0B2A52}
-  .offer-banner .vigencia input{font-size:9px}
+  .offer-banner .vigencia strong{font-size:9px}
   /* Header · marca destacada */
   .header{padding:9px 12px;margin-bottom:5px;border-radius:9px}
   .header-top{gap:10px;align-items:center}
@@ -777,7 +777,10 @@ small,.small{font-size:11px;color:var(--muted)}
   </div>
   <label class="vigencia">
     Vigencia hasta
-    <input type="date" id="vigencia">
+    <span class="vig-wrap">
+      <strong id="vigenciaDisp">—</strong>
+      <input type="date" class="date-overlay-input" id="vigencia" aria-label="Vigencia hasta">
+    </span>
   </label>
 </div>
 
@@ -823,22 +826,22 @@ small,.small{font-size:11px;color:var(--muted)}
 const IVA_RATE = 0.15;
 
 const PLANES = [
-  {id:'plus-36', name:'BasicTrack Plus', family:'ESTÁNDAR', line:'RAS', vigencia:'36M',
-   tagline:'Rastreo + Bloqueo de Motor · Contrato extendido 36M con cuota más cómoda',
-   precio:350,
+  {id:'starter', name:'Basic Track Starter', family:'ESTÁNDAR', line:'RAS', vigencia:'12M',
+   tagline:'Rastreo de respaldo inalámbrico · BackUp oculto magnético y transferible',
+   precio:150,
    features:[
-     'Monitoreo GPS 24/7 en tiempo real segundo a segundo',
-     'Bloqueo remoto inteligente de motor desde la app',
-     'Geocercas y alertas PUSH personalizadas',
-     'Plataforma WEB + APP móvil + WhatsApp Despachador',
-     'Instalación a domicilio en 48h · Cobertura nacional · Soporte 24/7'],
+     'Equipo 100% inalámbrico · sin cableado ni conexión al sistema eléctrico',
+     'Diseño portátil magnético · instalación oculta en el chasis y transferible entre vehículos',
+     'Rastreo satelital GPS en tiempo real desde APP y plataforma WEB',
+     'Batería de larga duración para operación autónoma · sin intervención mecánica',
+     'Histórico de ubicaciones y rutas · Plataforma WEB + APP móvil · Soporte 24/7'],
    benefits:[
-     '+40% control y productividad de la flota',
-     '25% ahorro en combustible y costos logísticos',
-     '95% efectividad en recuperación vehicular con bloqueo de motor'],
-   foot:''},
+     'Rastreo oculto de respaldo (BackUp): al ir escondido en el chasis dificulta su detección y sabotaje',
+     'Mayor probabilidad de recuperación vehicular ante robo o sustracción',
+     'Flexibilidad total: equipo portátil y transferible, reutilizable en cualquier unidad de la flota'],
+   foot:'Equipo de respaldo ideal como complemento de un rastreo principal · instalación no invasiva.'},
 
-  {id:'plus', name:'BasicTrack Plus', family:'ESTÁNDAR', line:'RAS', vigencia:'24M',
+  {id:'plus', name:'Basic Track Plus', family:'ESTÁNDAR', line:'RAS', vigencia:'24M',
    tagline:'Rastreo + Bloqueo de Motor · El más vendido para flotas',
    precio:350,
    features:[
@@ -853,7 +856,7 @@ const PLANES = [
      '95% efectividad en recuperación vehicular con bloqueo de motor'],
    foot:''},
 
-  {id:'pro', name:'BasicTrack Pro', family:'ESTÁNDAR', line:'RAS', vigencia:'24M',
+  {id:'pro', name:'Basic Track Pro', family:'ESTÁNDAR', line:'RAS', vigencia:'24M',
    tagline:'Bloqueo + AntiJammer + SOS + Apertura remota · Máxima seguridad',
    precio:450,
    features:[
@@ -914,7 +917,7 @@ const PLANES = [
    foot:'* Funciones IA aplican para 2 y 3 lentes. Referencia: 1 Lente $400 · 2 Lentes $500 · 3 Lentes $600.'},
 ];
 
-let activePlan = 'plus-36';
+let activePlan = 'starter';
 const state = {};
 
 const $ = sel => document.querySelector(sel);
@@ -933,8 +936,8 @@ function fmtDateShort(d){return d.toLocaleDateString('es-EC',{day:'2-digit',mont
 function renderSelector(){
   const sel = $('#plansSelector');
   sel.innerHTML = PLANES.map(p=>{
-    const hot = (p.id==='plus-36' || p.id==='premium-pro') ? '<span class="fam-tag" style="background:#FFE0DC;color:#B91C1C">🔥 TOP FLOTAS B2B</span>' : `<span class="fam-tag">${p.family}</span>`;
-    return `<button class="plan-btn ${p.id===activePlan?'active':''}" data-plan="${p.id}">${hot}<strong>${p.name}</strong><small>${p.line==='VID'?'Video':'Rastreo'} · ${p.vigencia}</small></button>`;
+    const hot = (p.id==='premium-pro') ? '<span class="fam-tag" style="background:#FFE0DC;color:#B91C1C">🔥 TOP FLOTAS B2B</span>' : `<span class="fam-tag">${p.family}</span>`;
+    return `<button class="plan-btn ${p.id===activePlan?'active':''}" data-plan="${p.id}">${hot}<strong>${p.name}</strong></button>`;
   }).join('');
   $$('.plan-btn').forEach(b=>{
     b.addEventListener('click',()=>{activePlan=b.dataset.plan;renderSelector();renderPlans();});
@@ -944,7 +947,7 @@ function renderSelector(){
 function renderPlans(){
   const c = $('#planContainer');
   c.innerHTML = PLANES.map(p=>{
-    if(!state[p.id]) state[p.id]={precio:p.precio,qty:50,cuotas:3,vigInicio:todayISO(),fechaPago1:todayISO()};
+    if(!state[p.id]) state[p.id]={precio:p.precio,qty:50,cuotas:3,vigInicio:todayISO(),fechaPago1:todayISO(),durMeses:parseInt(p.vigencia)||12};
     const s = state[p.id];
     return `
       <div class="plan-detail ${p.id===activePlan?'active':''}" id="plan_${p.id}">
@@ -956,9 +959,9 @@ function renderPlans(){
           </div>
           <div class="badges">
             <span class="badge badge-fam">CONTROL EMPRESARIAL</span>
-            <span class="badge badge-line">${p.line==='VID'?'VIDEO + IA EMPRESARIAL':'GPS · BLOQUEO · ALERTAS 24/7'}</span>
-            <span class="badge badge-vig">CONTRATO ${p.vigencia==='36M'?'36 MESES':p.vigencia==='24M'?'24 MESES':'12 MESES'}</span>
-            ${(p.id==='plus-36'||p.id==='premium-pro')?'<span class="badge badge-hot">🔥 #1 EN FLOTAS B2B</span>':''}
+            <span class="badge badge-line">${p.line==='VID'?'VIDEO + IA EMPRESARIAL':p.id==='starter'?'GPS · BACKUP OCULTO · RECUPERACIÓN':'GPS · BLOQUEO · ALERTAS 24/7'}</span>
+            <span class="badge badge-vig" id="badgeVig_${p.id}">CONTRATO ${p.vigencia==='36M'?'36 MESES':p.vigencia==='24M'?'24 MESES':'12 MESES'}</span>
+            ${(p.id==='premium-pro')?'<span class="badge badge-hot">🔥 #1 EN FLOTAS B2B</span>':''}
           </div>
         </div>
         <div class="calc-card">
@@ -975,7 +978,11 @@ function renderPlans(){
               <input type="date" class="date-overlay-input" data-plan="${p.id}" data-field="vigInicio" value="${s.vigInicio}" aria-label="Vigencia Inicio">
             </div>
             <div class="cm-item"><span>Vigencia Fin</span><strong id="vigFin_${p.id}">—</strong></div>
-            <div class="cm-item"><span>Duración total</span><strong id="vigTotal_${p.id}">—</strong></div>
+            <div class="cm-item"><span>Duración total</span>
+              <select data-plan="${p.id}" data-field="durMeses">
+                ${[[12,'1 año'],[24,'2 años'],[36,'3 años']].map(([m,t])=>`<option value="${m}" ${m===s.durMeses?'selected':''}>${t} (${m}M)</option>`).join('')}
+              </select>
+            </div>
             <div class="cm-item"><span>N° cuotas</span>
               <select data-plan="${p.id}" data-field="cuotas">
                 ${[1,2,3,4,6,10,12,15,18,24].map(n=>`<option value="${n}" ${n===s.cuotas?'selected':''}>${n} ${n===1?'pago único':'pagos'}</option>`).join('')}
@@ -1001,7 +1008,7 @@ function renderPlans(){
             </thead>
             <tbody>
               <tr>
-                <td class="td-plan"><strong>${p.name}</strong> · ${p.vigencia}</td>
+                <td class="td-plan"><strong>${p.name}</strong> · <span id="rowVig_${p.id}">${p.vigencia}</span></td>
                 <td class="td-cant"><input type="number" min="1" step="1" data-plan="${p.id}" data-field="qty" value="${s.qty}"></td>
                 <td class="td-pu"><input type="number" min="0" step="0.01" data-plan="${p.id}" data-field="precio" value="${s.precio}"></td>
                 <td class="td-sub" id="sub_${p.id}">—</td>
@@ -1050,7 +1057,7 @@ function renderPlans(){
       const planId=e.target.dataset.plan, field=e.target.dataset.field;
       let v;
       if(field==='vigInicio' || field==='fechaPago1') v = e.target.value;
-      else if(field==='cuotas') v = parseInt(e.target.value);
+      else if(field==='cuotas' || field==='durMeses') v = parseInt(e.target.value);
       else v = parseFloat(e.target.value);
       state[planId][field] = (field==='vigInicio' || field==='fechaPago1') ? v : (isNaN(v)?0:v);
       recalc(planId);
@@ -1062,20 +1069,22 @@ function renderPlans(){
 function recalc(planId){
   const s = state[planId];
   const plan = PLANES.find(p=>p.id===planId);
-  // Vigencia activación
-  const meses = parseInt(plan.vigencia) || 24;
+  // Vigencia activación · duración editable (1/2/3 años)
+  const meses = s.durMeses || parseInt(plan.vigencia) || 12;
   const ini = s.vigInicio || todayISO();
   const dIni = new Date(ini+'T00:00:00');
   const dFin = new Date(dIni); dFin.setMonth(dFin.getMonth()+meses); dFin.setDate(dFin.getDate()-1);
   const anios = meses/12;
   const anioTxt = (Number.isInteger(anios)?anios:anios.toFixed(1)) + ' año' + (anios===1?'':'s');
   const vfEl = document.getElementById('vigFin_'+planId);
-  const vtEl = document.getElementById('vigTotal_'+planId);
   const viEl = document.getElementById('vigIniDisp_'+planId);
   const fpEl = document.getElementById('fechaPago1Disp_'+planId);
+  const bvEl = document.getElementById('badgeVig_'+planId);
+  const rvEl = document.getElementById('rowVig_'+planId);
   if(vfEl) vfEl.textContent = fmtDateShort(dFin);
-  if(vtEl) vtEl.textContent = `${meses} meses · ${anioTxt}`;
   if(viEl) viEl.textContent = fmtDateShort(dIni);
+  if(bvEl) bvEl.textContent = `CONTRATO ${meses} MESES · ${anioTxt}`;
+  if(rvEl) rvEl.textContent = `${meses}M`;
   if(fpEl){
     const dFp = new Date((s.fechaPago1||todayISO())+'T00:00:00');
     fpEl.textContent = fmtDateShort(dFp);
@@ -1092,7 +1101,7 @@ function recalc(planId){
   $('#iva_'+planId).textContent = fmt(iva);
   $('#total_'+planId).textContent = fmt(total);
 
-  // Plan de pagos · primera fecha editable, resto +30 días automático
+  // Plan de pagos · primera fecha editable, resto mismo día cada mes (30 días calendario)
   const pagosBody = document.getElementById('pagos_'+planId);
   const callout = document.getElementById('pagosCallout_'+planId);
   if(pagosBody){
@@ -1106,8 +1115,10 @@ function recalc(planId){
       if(callout) callout.innerHTML = `<span class="callout-num">PAGO ÚNICO</span> <span class="callout-val">${fmt(total)}</span>`;
     } else {
       const ordinales = ['1ERA','2DA','3RA','4TA','5TA','6TA','7MA','8VA','9NA','10MA','11MA','12MA','13RA','14TA','15TA','16TA','17MA','18VA','19NA','20MA','21RA','22DA','23RA','24TA'];
+      const domPago = dPago1.getDate();
       for(let i=0;i<n;i++){
-        const d = new Date(dPago1); d.setDate(d.getDate() + i*30);
+        const d = new Date(dPago1); d.setMonth(d.getMonth() + i);
+        if(d.getDate() !== domPago) d.setDate(0); // el mes destino no tiene ese día → último día del mes
         const label = `${ordinales[i] || (i+1)+'°'} CUOTA`;
         html += `<tr><td>${label}</td><td>${fmtDateShort(d)}</td><td>${pctTxt}</td><td>${fmt(valorCuota)}</td></tr>`;
       }
@@ -1128,7 +1139,7 @@ function buildResumen(){
   const num = $('#hd_cotnum').textContent;
   const vig = fmtDateLong($('#vigencia').value);
   let txt = `🚗 *Hi CAR GPS · Cotización ${num}*\n`;
-  txt += `Cliente: ${cli}\nPlan: *${p.name}* (${p.family} · ${p.vigencia})\n`;
+  txt += `Cliente: ${cli}\nPlan: *${p.name}* (${p.family} · ${s.durMeses}M)\n`;
   txt += `Vehículos: ${s.qty} · Precio U.: ${fmt(s.precio)}\n\n`;
   txt += `💰 Subtotal: ${fmt(subtotal)}\nIVA 15%: ${fmt(iva)}\n*TOTAL: ${fmt(total)}*\n`;
   if(s.cuotas>1) txt += `\n📅 Plan de pagos: *${s.cuotas} cuotas de ${fmt(cuota)}*\n`;
@@ -1149,8 +1160,8 @@ $('#btnWA').addEventListener('click',()=>{
 $('#btnReset').addEventListener('click',()=>{
   if(!confirm('¿Limpiar la cotización?'))return;
   ['cli_empresa','cli_ruc','cli_contacto','cli_cargo','cli_email','cli_telefono','cli_ciudad','cli_flota','cli_asesor'].forEach(id=>$('#'+id).value='');
-  PLANES.forEach(p=>{state[p.id]={precio:p.precio,qty:50,cuotas:3,vigInicio:todayISO()}});
-  $('#vigencia').value=plus15();
+  PLANES.forEach(p=>{state[p.id]={precio:p.precio,qty:50,cuotas:3,vigInicio:todayISO(),fechaPago1:todayISO(),durMeses:parseInt(p.vigencia)||12}});
+  $('#vigencia').value=plus15();renderVigencia();
   $('#hd_cotnum').textContent=defaultCotNum();
   $('#hd_fecha').textContent=fmtDateLong(todayISO());
   renderPlans();
@@ -1158,7 +1169,10 @@ $('#btnReset').addEventListener('click',()=>{
 
 $('#hd_cotnum').textContent=defaultCotNum();
 $('#hd_fecha').textContent=fmtDateLong(todayISO());
+function renderVigencia(){const el=$('#vigenciaDisp');if(!el)return;const v=$('#vigencia').value;el.textContent=v?fmtDateShort(new Date(v+'T00:00:00')):'—';}
+$('#vigencia').addEventListener('input',renderVigencia);
 $('#vigencia').value=plus15();
+renderVigencia();
 renderSelector();
 renderPlans();
 </script>
