@@ -580,6 +580,121 @@ small,.small{font-size:11px;color:var(--muted)}
 }
 .footer-info .legal strong{color:var(--brand-deep);letter-spacing:.02em}
 
+/* TABS · PLANES ANUALES / PLANES MENSUALES */
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.tab-btn{
+  font-family:'Space Grotesk','Inter',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:.02em;
+  border:1.5px solid var(--line);background:#fff;color:var(--muted);
+  border-radius:12px;padding:11px 14px;cursor:pointer;
+  box-shadow:var(--shadow);transition:.15s;text-transform:uppercase;text-align:center;
+}
+.tab-btn:hover{border-color:var(--brand-bright);color:var(--brand-deep)}
+.tab-btn.active{
+  background:linear-gradient(135deg,#0B2A52 0%,#1B4F8F 60%,#2680E4 100%);
+  color:#fff;border-color:var(--brand-deep);box-shadow:var(--shadow-lg);
+}
+.tab-btn small{display:block;font-size:9px;font-weight:600;opacity:.85;margin-top:2px;letter-spacing:.05em}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* Bloques de concepto (mensual) · Mensualidad / Instalación separados */
+.concept-block{margin:12px 0}
+.concept-head{
+  display:flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:700;color:var(--brand-deep);
+  text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:6px;padding-left:2px;
+}
+.concept-head .dot{font-size:13px}
+
+/* ★ PRIMARY · Mensualidad = lo más importante y vistoso */
+.concept-block.primary{
+  background:linear-gradient(135deg,#F1F8FF 0%,#E3EEFB 100%);
+  border:2px solid var(--brand);border-radius:13px;
+  padding:13px 15px 14px;margin:14px 0;
+  box-shadow:0 8px 24px rgba(11,42,82,.15);
+}
+.concept-block.primary .concept-head{font-size:13.5px;margin-bottom:9px;color:var(--brand-deep)}
+.concept-block.primary .concept-head .dot{font-size:16px}
+.concept-block.primary .exec-table{margin-bottom:0}
+.concept-block.primary .exec-table input{font-size:16px;font-weight:700;color:var(--brand-deep)}
+.concept-block.primary .exec-table .td-sub{font-size:16px}
+.concept-block.primary .exec-table tr.r-iva td{font-size:12px}
+/* TOTAL TARIFA MENSUAL · sin fondo, letras azules grandes en negrilla */
+.concept-block.primary .exec-table tr.r-total td.tot-bar{
+  background:transparent;color:var(--brand-deep);text-align:left;
+  font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;
+  border:none;border-top:2px solid var(--brand);padding:10px 12px 5px;
+}
+.concept-block.primary .exec-table tr.r-total td.tot-val{
+  background:transparent;color:var(--brand-deep);text-align:right;
+  font-family:'Space Grotesk',inherit;font-size:25px;font-weight:800;font-variant-numeric:tabular-nums;
+  border:none;border-top:2px solid var(--brand);padding:6px 12px 5px;
+}
+.concept-block.primary .exec-table tr.r-total td.tot-val .tv-permes{font-size:13px;font-weight:700;color:var(--brand)}
+
+/* ▪ SECONDARY · Instalación / financiamiento / cronograma = menos vistoso y más pequeño */
+.concept-block.secondary{margin:10px 0}
+.concept-block.secondary .concept-head{color:var(--muted);font-size:9.5px}
+.concept-block.secondary .concept-head .dot{font-size:10px}
+.concept-block.secondary .exec-table{font-size:11px}
+.concept-block.secondary .exec-table thead th{background:#EEF3F9;color:var(--ink-soft);padding:6px 10px;font-size:9px}
+.concept-block.secondary .exec-table tbody td{padding:6px 10px}
+.concept-block.secondary .exec-table .td-plan{font-weight:500;color:var(--ink-soft)}
+.concept-block.secondary .exec-table input{font-size:12px}
+.concept-block.secondary .exec-table .td-sub{color:var(--ink-soft);font-weight:600}
+.concept-block.secondary .exec-table tr.r-total td{color:var(--ink);font-size:11px}
+.concept-block.secondary .pagos-title{font-size:9.5px;color:var(--ink-soft);letter-spacing:.05em}
+.concept-block.secondary .pagos-callout{
+  background:#EEF3F9;border:1px solid var(--line);box-shadow:none;padding:4px 10px;
+}
+.concept-block.secondary .pagos-callout .callout-num{color:var(--muted);font-size:9.5px}
+.concept-block.secondary .pagos-callout .callout-val{color:var(--brand-deep);font-size:13px}
+.concept-block.secondary .pagos-table{font-size:11px}
+.concept-block.secondary .pagos-table thead th{background:#EEF3F9;color:var(--ink-soft);padding:4px 9px;font-size:8.5px}
+.concept-block.secondary .pagos-table tbody td{padding:5px 9px}
+.concept-block.secondary .pagos-table tbody tr td:first-child{color:var(--ink-soft);font-weight:600;font-size:10.5px;width:34%;white-space:nowrap}
+.concept-block.secondary .pagos-table thead th:first-child{width:34%}
+.concept-block.secondary .pagos-table tbody tr td:nth-child(2){width:24%}
+.concept-block.secondary .pagos-table tbody tr td:nth-child(4){color:var(--ink);font-size:12px;width:28%}
+
+/* Cronograma · fechas editables por fila + mes editable */
+.pagos-table td .date-cell{position:relative;display:inline-block;min-width:74px;cursor:pointer}
+.pagos-table td .date-cell strong{font-family:'Space Grotesk',inherit;font-weight:700;color:var(--brand);font-size:11.5px}
+.pagos-table td .date-cell .date-overlay-input{font-size:16px}
+.pagos-table td .date-cell:hover strong{text-decoration:underline dotted}
+.pagos-table td.mes-cell{white-space:nowrap;text-align:center}
+.pagos-table td.mes-cell .mes-num{font-family:'Space Grotesk',inherit;font-weight:700;color:var(--brand-deep);font-size:12px}
+.pagos-table td.mes-cell .mes-input{
+  width:36px;font-family:'Space Grotesk',inherit;font-weight:700;font-size:12px;
+  color:var(--brand-deep);background:#fff;border:1px solid var(--line);border-radius:5px;
+  text-align:center;padding:1px 2px;
+}
+.pagos-table td.mes-cell .mes-rest{font-size:9.5px;color:var(--muted);font-weight:600}
+.pagos-table td .permes{font-size:9.5px;font-weight:600;color:var(--muted)}
+
+/* Financiamiento de instalación · discreto (neutro) */
+.finance-line{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  background:#F4F7FB;border:1px solid var(--line);border-radius:8px;
+  padding:7px 11px;margin:5px 0 2px;
+  font-size:11px;color:var(--ink-soft);font-weight:600;
+}
+.finance-line select{
+  font-family:inherit;font-weight:700;font-size:12px;color:var(--brand-deep);
+  background:#fff;border:1px solid var(--line);border-radius:6px;padding:3px 20px 3px 8px;
+  -webkit-appearance:none;appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%230B2A52' d='M6 8L0 0h12z'/></svg>");
+  background-repeat:no-repeat;background-position:right 6px center;
+}
+.finance-line .fin-info{color:var(--ink-soft);font-weight:600}
+.finance-line .fin-info strong{color:var(--brand-deep);font-size:13px;font-weight:700}
+
+/* Condiciones · párrafo único justificado */
+.condiciones-inline.condiciones-just{text-align:justify}
+.condiciones-inline .cond-alert{color:var(--danger);font-weight:700}
+
 /* PRINT A4 PORTRAIT — ultra-compacto para 1 página */
 @media print{
   @page{size:A4 portrait;margin:11mm 7mm 7mm 7mm}
@@ -587,7 +702,20 @@ small,.small{font-size:11px;color:var(--muted)}
   body{font-size:8px;line-height:1.22}
   .app{padding:0;max-width:none}
   /* Ocultar todo lo no esencial */
-  .actions,.btn,.plans,.firma-block,.plan-selector-card{display:none !important}
+  .actions,.btn,.plans,.firma-block,.plan-selector-card,.tabs{display:none !important}
+  /* Solo la pestaña activa se imprime */
+  .tab-pane:not(.active){display:none !important}
+  .tab-pane.active{display:block !important}
+  /* Bloques concepto / financiamiento / total · compactos en pdf */
+  .concept-block{margin:6px 0;break-inside:avoid;page-break-inside:avoid}
+  .concept-head{font-size:9.5px;margin-bottom:3px}
+  .finance-line{padding:4px 9px;margin:2px 0 3px;font-size:9.5px;border-radius:6px;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .finance-line select{font-size:10px;padding:1px 18px 1px 6px}
+  .finance-line .fin-info strong{font-size:11px}
+  .total-contrato-line{font-size:9.5px;padding:4px 9px;margin:3px 0 5px;border-radius:6px;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .total-contrato-line strong{font-size:12px}
   /* Mantener color en bloques clave */
   .header,.offer-banner,.calc-card,.plan-hero,
   .badge,.pill,.brand img.logo,
@@ -696,7 +824,7 @@ small,.small{font-size:11px;color:var(--muted)}
     padding:4px 8px;margin-top:5px;border-radius:5px;
     -webkit-print-color-adjust:exact;print-color-adjust:exact;
   }
-  .condiciones-inline span{display:block}
+  .condiciones-inline > span{display:block}
   /* Tipografía global */
   h1{font-size:12px}
   h2{font-size:11px}
@@ -714,6 +842,40 @@ small,.small{font-size:11px;color:var(--muted)}
   .footer-info{font-size:7.5px;gap:2px;line-height:1.35}
   .footer-info .legal{font-size:7.5px;margin-top:3px;padding-top:3px;border-top:.5px solid #cdd6e3;font-weight:600}
   .footer-info .legal strong{color:#0B2A52;letter-spacing:.02em}
+  /* ── Compactación extra SOLO pestaña mensual (más bloques) ── */
+  #tab-mensual .plan-hero{padding:4px 8px;margin-bottom:3px}
+  #tab-mensual .calc-card{padding:7px 10px;margin:4px 0 3px}
+  #tab-mensual .contrato-meta{padding:4px 8px;margin:3px 0;gap:5px}
+  #tab-mensual .exec-table{margin-bottom:2px}
+  #tab-mensual .exec-table tbody td{padding:2.5px 8px}
+  #tab-mensual .concept-block{margin:3px 0}
+  #tab-mensual .concept-head{margin-bottom:2px}
+  #tab-mensual .finance-line{margin:2px 0}
+  #tab-mensual .pagos-header{margin-bottom:2px}
+  #tab-mensual .pagos-table{margin-bottom:3px}
+  #tab-mensual .concept-block.secondary .pagos-table tbody td{padding:2px 9px}
+  #tab-mensual .concept-block.secondary .exec-table tbody td{padding:2.5px 10px}
+  /* Bloque principal MENSUALIDAD · mantener destacado en pdf */
+  #tab-mensual .concept-block.primary{
+    background:#E7F1FC !important;border-width:1.5px;padding:8px 11px;margin:6px 0;
+    box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  #tab-mensual .concept-block.primary .concept-head{font-size:11px}
+  #tab-mensual .concept-block.primary .exec-table input{font-size:12.5px}
+  #tab-mensual .concept-block.primary .exec-table .td-sub{font-size:12.5px}
+  #tab-mensual .concept-block.primary .exec-table tr.r-total td.tot-bar{font-size:11px;padding:5px 10px}
+  #tab-mensual .concept-block.primary .exec-table tr.r-total td.tot-val{font-size:18px;padding:4px 11px}
+  #tab-mensual .concept-block.primary .exec-table tr.r-total td.tot-val .tv-permes{font-size:10px}
+  /* Cronograma editable · texto plano en pdf */
+  #tab-mensual .pagos-table .mes-input{border:none;background:transparent;-webkit-appearance:none;appearance:none;padding:0;width:auto;font-size:9.5px;color:#0B2A52;pointer-events:none}
+  #tab-mensual .pagos-table .date-cell strong{font-size:9px}
+  #tab-mensual .pagos-table tbody td{padding:3px 7px}
+  #tab-mensual .condiciones-inline{font-size:7.5px;padding:3px 7px;margin-top:3px;line-height:1.25}
+  #tab-mensual .plan-features{gap:8px;margin-top:3px}
+  #tab-mensual .feat-block h3{margin-bottom:2px}
+  #tab-mensual .feat-block ul{font-size:7.8px;line-height:1.16}
+  #tab-mensual .feat-block ul li{padding:0.8px 0 0.8px 9px}
+  #tab-mensual .feat-block ul li::before{top:5px}
   /* Solo el plan activo se imprime */
   .plan-detail.active{display:block !important}
   .plan-detail:not(.active){display:none !important}
@@ -757,10 +919,19 @@ small,.small{font-size:11px;color:var(--muted)}
   </div>
 </section>
 
+<!-- SELECTOR DE MODALIDAD -->
+<div class="tabs">
+  <button class="tab-btn active" data-tab="anual">📅 Planes Anuales<small>Pago por contrato · 1 / 2 / 3 años</small></button>
+  <button class="tab-btn" data-tab="mensual">🔄 Planes Mensuales<small>Contrato 36 meses · pago mensual</small></button>
+</div>
+
+<!-- ═══════════ PESTAÑA · PLANES ANUALES ═══════════ -->
+<div class="tab-pane active" id="tab-anual">
+
 <!-- PLAN SELECTOR -->
 <section class="card plan-selector-card">
   <div class="card-title">
-    <h2>Selección de Plan</h2>
+    <h2>Selección de Plan · Anual</h2>
   </div>
   <div class="plans" id="plansSelector"></div>
 </section>
@@ -783,6 +954,40 @@ small,.small{font-size:11px;color:var(--muted)}
     </span>
   </label>
 </div>
+
+</div><!-- /tab-anual -->
+
+<!-- ═══════════ PESTAÑA · PLANES MENSUALES ═══════════ -->
+<div class="tab-pane" id="tab-mensual">
+
+<!-- PLAN SELECTOR MENSUAL -->
+<section class="card plan-selector-card">
+  <div class="card-title">
+    <h2>Selección de Plan · Mensual (36 meses)</h2>
+  </div>
+  <div class="plans" id="plansSelectorM"></div>
+</section>
+
+<!-- PLAN DETAILS MENSUAL -->
+<div id="planContainerM"></div>
+
+<!-- OFFER BANNER MENSUAL -->
+<div class="offer-banner">
+  <div class="seal">36<br>MESES</div>
+  <div class="text">
+    <h3>PLAN MENSUAL · CONTRATO A 36 MESES</h3>
+    <p><strong>Cuota mensual fija.</strong> Retiro voluntario notificando 30 días antes, con desinstalación anticipada de <strong>$30 + IVA por dispositivo</strong>.</p>
+  </div>
+  <label class="vigencia">
+    Vigencia hasta
+    <span class="vig-wrap">
+      <strong id="vigenciaDispM">—</strong>
+      <input type="date" class="date-overlay-input" id="vigenciaM" aria-label="Vigencia hasta">
+    </span>
+  </label>
+</div>
+
+</div><!-- /tab-mensual -->
 
 <!-- ACCIONES -->
 <div class="actions">
@@ -917,8 +1122,24 @@ const PLANES = [
    foot:'* Funciones IA aplican para 2 y 3 lentes. Referencia: 1 Lente $400 · 2 Lentes $500 · 3 Lentes $600.'},
 ];
 
+// ── Defaults MENSUALES por plan · por unidad (vehículo), SIN IVA · 100% editables ──
+// Ejemplo por defecto (plan "plus", 50 equipos): mensualidad $5·50 = $250 → $287.50 c/IVA
+// e instalación $15·50 = $750 → $862.50 c/IVA · PAGO 1 = $1,150.00
+const MENSUAL_DEF = {
+  'starter':      {mensual:4,  instalacion:12},
+  'plus':         {mensual:5,  instalacion:15},
+  'pro':          {mensual:6,  instalacion:18},
+  'premium-plus': {mensual:7,  instalacion:20},
+  'premium-pro':  {mensual:8,  instalacion:22},
+  'video':        {mensual:12, instalacion:40},
+};
+const MESES_CONTRATO = 36;
+
 let activePlan = 'starter';
+let activePlanM = 'plus';   // muestra el ejemplo $1,150.00 / $287.50 al abrir la pestaña mensual
+let activeTab = 'anual';
 const state = {};
+const stateM = {};
 
 const $ = sel => document.querySelector(sel);
 const $$ = sel => document.querySelectorAll(sel);
@@ -1149,22 +1370,27 @@ function buildResumen(){
 }
 
 $('#btnCopy').addEventListener('click',()=>{
-  navigator.clipboard.writeText(buildResumen()).then(()=>{
+  navigator.clipboard.writeText(currentResumen()).then(()=>{
     const b=$('#btnCopy'),o=b.innerHTML;b.innerHTML='✓ Copiado';setTimeout(()=>b.innerHTML=o,1800);
   });
 });
 $('#btnWA').addEventListener('click',()=>{
-  const phone = $('#cli_telefono').value.replace(/\D/g,'')||'593988248484';
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildResumen())}`,'_blank');
+  window.open(`https://wa.me/${currentPhone()}?text=${encodeURIComponent(currentResumen())}`,'_blank');
 });
 $('#btnReset').addEventListener('click',()=>{
   if(!confirm('¿Limpiar la cotización?'))return;
   ['cli_empresa','cli_ruc','cli_contacto','cli_cargo','cli_email','cli_telefono','cli_ciudad','cli_flota','cli_asesor'].forEach(id=>$('#'+id).value='');
-  PLANES.forEach(p=>{state[p.id]={precio:p.precio,qty:50,cuotas:3,vigInicio:todayISO(),fechaPago1:todayISO(),durMeses:parseInt(p.vigencia)||12}});
+  PLANES.forEach(p=>{
+    state[p.id]={precio:p.precio,qty:50,cuotas:3,vigInicio:todayISO(),fechaPago1:todayISO(),durMeses:parseInt(p.vigencia)||12};
+    const d=MENSUAL_DEF[p.id]||{mensual:10,instalacion:30};
+    stateM[p.id]={mensual:d.mensual,instalacion:d.instalacion,qty:50,cuotasInstal:1,inicio:todayISO(),fechas:{},mesMens:2};
+  });
   $('#vigencia').value=plus15();renderVigencia();
+  $('#vigenciaM').value=plus15();renderVigenciaM();
   $('#hd_cotnum').textContent=defaultCotNum();
   $('#hd_fecha').textContent=fmtDateLong(todayISO());
   renderPlans();
+  renderPlansM();
 });
 
 $('#hd_cotnum').textContent=defaultCotNum();
@@ -1173,8 +1399,300 @@ function renderVigencia(){const el=$('#vigenciaDisp');if(!el)return;const v=$('#
 $('#vigencia').addEventListener('input',renderVigencia);
 $('#vigencia').value=plus15();
 renderVigencia();
+/* ═══════════════════ PLANES MENSUALES · 36 MESES ═══════════════════ */
+function renderSelectorM(){
+  const sel = $('#plansSelectorM');
+  sel.innerHTML = PLANES.map(p=>{
+    const hot = (p.id==='premium-pro') ? '<span class="fam-tag" style="background:#FFE0DC;color:#B91C1C">🔥 TOP FLOTAS B2B</span>' : `<span class="fam-tag">${p.family}</span>`;
+    return `<button class="plan-btn ${p.id===activePlanM?'active':''}" data-plan="${p.id}">${hot}<strong>${p.name}</strong></button>`;
+  }).join('');
+  $$('#plansSelectorM .plan-btn').forEach(b=>{
+    b.addEventListener('click',()=>{activePlanM=b.dataset.plan;renderSelectorM();renderPlansM();});
+  });
+}
+
+function calcM(id){
+  const s = stateM[id];
+  const qty = s.qty||0, N = s.cuotasInstal||1;
+  const mensualSub = (s.mensual||0)*qty;
+  const instalSub  = (s.instalacion||0)*qty;
+  const mensualIva = mensualSub*IVA_RATE, instalIva = instalSub*IVA_RATE;
+  const mensualTot = mensualSub+mensualIva;                 // por mes, c/IVA
+  const instalTot  = instalSub+instalIva;                   // instalación total c/IVA
+  const totalCon   = instalTot + mensualTot*MESES_CONTRATO; // total del contrato 36M
+  const cuotaIns   = N>0 ? instalTot/N : instalTot;         // cada cuota de instalación
+  const pago1      = cuotaIns + mensualTot;                 // día de instalación
+  const desinstTot = qty*30*(1+IVA_RATE);                   // $30+IVA por dispositivo
+  return {s,qty,N,mensualSub,instalSub,mensualIva,instalIva,ivaTot:mensualIva+instalIva,mensualTot,instalTot,totalCon,cuotaIns,pago1,desinstTot};
+}
+
+function renderPlansM(){
+  const c = $('#planContainerM');
+  c.innerHTML = PLANES.map(p=>{
+    if(!stateM[p.id]){
+      const d = MENSUAL_DEF[p.id] || {mensual:10,instalacion:30};
+      stateM[p.id] = {mensual:d.mensual, instalacion:d.instalacion, qty:50, cuotasInstal:1, inicio:todayISO(), fechas:{}, mesMens:2};
+    }
+    const s = stateM[p.id];
+    const lineLabel = p.line==='VID'?'VIDEO + IA EMPRESARIAL':p.id==='starter'?'GPS · BACKUP OCULTO · RECUPERACIÓN':'GPS · BLOQUEO · ALERTAS 24/7';
+    return `
+      <div class="plan-detail ${p.id===activePlanM?'active':''}" id="planM_${p.id}">
+        <div class="plan-hero">
+          <div>
+            <div class="plan-kicker">Plan Mensual Seleccionado</div>
+            <h2>${p.name}</h2>
+            <div class="tagline">${p.tagline}</div>
+          </div>
+          <div class="badges">
+            <span class="badge badge-fam">PAGO MENSUAL</span>
+            <span class="badge badge-line">${lineLabel}</span>
+            <span class="badge badge-vig">CONTRATO 36 MESES · 3 años</span>
+            ${(p.id==='premium-pro')?'<span class="badge badge-hot">🔥 #1 EN FLOTAS B2B</span>':''}
+          </div>
+        </div>
+        <div class="calc-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+            <h2>Propuesta Mensual · ${p.name}</h2>
+            <h3>IVA 15% incluido</h3>
+          </div>
+          <!-- Datos del contrato mensual -->
+          <div class="contrato-meta" style="grid-template-columns:repeat(3,1fr)">
+            <div class="cm-item cm-edit">
+              <span>Día de Instalación</span>
+              <strong id="mIniDisp_${p.id}">—</strong>
+              <em class="edit-mark">✎</em>
+              <input type="date" class="date-overlay-input" data-plan="${p.id}" data-field="inicio" value="${s.inicio}" aria-label="Día de instalación">
+            </div>
+            <div class="cm-item"><span>Duración del Contrato</span><strong>36 MESES · 3 años</strong></div>
+            <div class="cm-item"><span>Fin de Contrato</span><strong id="mFin_${p.id}">—</strong></div>
+          </div>
+
+          <!-- ★ BLOQUE PRINCIPAL · MENSUALIDAD (lo más importante) -->
+          <div class="concept-block primary">
+            <div class="concept-head"><span class="dot">🔵</span> Mensualidad · servicio de rastreo</div>
+            <table class="exec-table">
+              <thead>
+                <tr>
+                  <th class="th-plan">CONCEPTO</th>
+                  <th class="th-cant">VEHÍC.</th>
+                  <th class="th-pu">VALOR / MES C/U</th>
+                  <th class="th-sub">SUBTOTAL / MES</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td-plan"><strong>Mensualidad</strong> · por vehículo</td>
+                  <td class="td-cant"><input type="number" min="1" step="1" data-plan="${p.id}" data-field="qty" value="${s.qty}"></td>
+                  <td class="td-pu"><input type="number" min="0" step="0.01" data-plan="${p.id}" data-field="mensual" value="${s.mensual}"></td>
+                  <td class="td-sub" id="mSubMes_${p.id}">—</td>
+                </tr>
+                <tr class="r-iva"><td colspan="2"></td><td>IVA 15%</td><td id="mIvaMes_${p.id}">—</td></tr>
+                <tr class="r-total"><td class="tot-bar" colspan="3">TOTAL TARIFA MENSUAL</td><td class="tot-val"><span id="mTotMes_${p.id}">—</span><span class="tv-permes"> /mes</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- BLOQUE SECUNDARIO · INSTALACIÓN (pago único, financiable) -->
+          <div class="concept-block secondary">
+            <div class="concept-head"><span class="dot">🟢</span> Instalación · pago único</div>
+            <table class="exec-table">
+              <thead>
+                <tr>
+                  <th class="th-plan">CONCEPTO</th>
+                  <th class="th-cant">VEHÍC.</th>
+                  <th class="th-pu">VALOR UNIT.</th>
+                  <th class="th-sub">SUBTOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td-plan"><strong>Instalación</strong> · única vez/vehículo</td>
+                  <td class="td-cant" id="mQtyIns_${p.id}">—</td>
+                  <td class="td-pu"><input type="number" min="0" step="0.01" data-plan="${p.id}" data-field="instalacion" value="${s.instalacion}"></td>
+                  <td class="td-sub" id="mSubIns_${p.id}">—</td>
+                </tr>
+                <tr class="r-iva"><td colspan="2"></td><td>IVA 15%</td><td id="mIvaIns_${p.id}">—</td></tr>
+                <tr class="r-total"><td colspan="2"></td><td>TOTAL INSTALACIÓN</td><td id="mTotIns_${p.id}">—</td></tr>
+              </tbody>
+            </table>
+            <div class="finance-line">
+              <span>💳 Financiamiento del costo de instalación en</span>
+              <select data-plan="${p.id}" data-field="cuotasInstal">
+                ${[1,2,3,4,5,6].map(n=>`<option value="${n}" ${n===s.cuotasInstal?'selected':''}>${n} ${n===1?'pago único':'cuotas'}</option>`).join('')}
+              </select>
+              <span class="fin-info" id="mFinInfo_${p.id}">—</span>
+            </div>
+          </div>
+
+          <!-- BLOQUE SECUNDARIO · CRONOGRAMA -->
+          <div class="concept-block secondary">
+            <div class="pagos-header">
+              <div class="pagos-title">📅 Cronograma de Pagos · 36 meses</div>
+              <div class="pagos-callout" id="mCallout_${p.id}">—</div>
+            </div>
+            <table class="pagos-table">
+              <thead>
+                <tr><th>Concepto del pago</th><th>Cuándo</th><th>Mes</th><th>Valor c/u</th></tr>
+              </thead>
+              <tbody id="mPagos_${p.id}"></tbody>
+            </table>
+          </div>
+
+          <!-- Condiciones · párrafo único justificado -->
+          <div class="condiciones-inline condiciones-just">
+            <span><strong>Equipos en comodato</strong> · <strong>Garantía total</strong> durante el contrato · <strong>Contrato a 36 meses</strong> con cuota mensual congelada · 20 puntos de atención a nivel nacional. <span class="cond-alert">Retiro voluntario:</span> el cliente puede retirarse notificando con <strong>30 días de anticipación</strong> en cualquier momento, pagando por anticipado la <strong>desinstalación de $30 + IVA por dispositivo</strong> (<span id="mDesinst_${p.id}">—</span> por <span id="mDesinstQty_${p.id}">${s.qty}</span> equipos).</span>
+          </div>
+        </div>
+
+        <!-- Features y Beneficios -->
+        <div class="plan-features">
+          <div class="feat-block">
+            <h3>Características incluidas</h3>
+            <ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+            ${p.foot?`<div class="footnote">${p.foot}</div>`:''}
+          </div>
+          <div class="feat-block benefits">
+            <h3>Beneficios empresariales</h3>
+            <ul>${p.benefits.map(b=>`<li>${b}</li>`).join('')}</ul>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  $$('#planContainerM input, #planContainerM select').forEach(el=>{
+    el.addEventListener('input',e=>{
+      const planId=e.target.dataset.plan, field=e.target.dataset.field;
+      let v;
+      if(field==='inicio') v = e.target.value;
+      else if(field==='cuotasInstal') v = parseInt(e.target.value);
+      else v = parseFloat(e.target.value);
+      stateM[planId][field] = (field==='inicio') ? v : (isNaN(v)?0:v);
+      // al cambiar nº de cuotas, la mensualidad simple arranca al mes siguiente
+      if(field==='cuotasInstal') stateM[planId].mesMens = (isNaN(v)?1:v)+1;
+      recalcM(planId);
+    });
+  });
+  PLANES.forEach(p=>recalcM(p.id));
+}
+
+function isoLocal(d){const y=d.getFullYear(),mo=String(d.getMonth()+1).padStart(2,'0'),da=String(d.getDate()).padStart(2,'0');return `${y}-${mo}-${da}`;}
+function addMonthsSafe(base,n){const d=new Date(base);const day=d.getDate();d.setMonth(d.getMonth()+n);if(d.getDate()!==day)d.setDate(0);return d;}
+
+function recalcM(planId){
+  const m = calcM(planId);
+  const s = m.s;
+  // Fechas
+  const dIni = new Date((s.inicio||todayISO())+'T00:00:00');
+  const dFin = new Date(dIni); dFin.setMonth(dFin.getMonth()+MESES_CONTRATO); dFin.setDate(dFin.getDate()-1);
+  const set = (id,val)=>{const el=document.getElementById(id+'_'+planId); if(el) el.textContent=val;};
+  set('mIniDisp', fmtDateShort(dIni));
+  set('mFin', fmtDateShort(dFin));
+  set('mSubMes', fmt(m.mensualSub));
+  set('mIvaMes', fmt(m.mensualIva));
+  set('mTotMes', fmt(m.mensualTot));
+  set('mQtyIns', m.qty);
+  set('mSubIns', fmt(m.instalSub));
+  set('mIvaIns', fmt(m.instalIva));
+  set('mTotIns', fmt(m.instalTot));
+  set('mDesinst', fmt(m.desinstTot));
+  set('mDesinstQty', m.qty);
+
+  const N = m.N;
+  const mesMens = Math.max(2, Math.min(36, s.mesMens || (N+1)));
+
+  // Financiamiento de la instalación
+  const fin = document.getElementById('mFinInfo_'+planId);
+  if(fin){
+    fin.innerHTML = N>1
+      ? `→ ${N} cuotas de <strong>${fmt(m.cuotaIns)}</strong>`
+      : `→ <strong>${fmt(m.instalTot)}</strong> el día de instalación`;
+  }
+
+  // Cronograma · fechas y mes editables por fila
+  const body = document.getElementById('mPagos_'+planId);
+  const callout = document.getElementById('mCallout_'+planId);
+  if(body){
+    if(!s.fechas) s.fechas = {};
+    const dateFor = (key,def)=> s.fechas[key] ? new Date(s.fechas[key]+'T00:00:00') : def;
+    const dateCell = (key,d)=>`<span class="date-cell"><strong>${fmtDateShort(d)}</strong><input type="date" class="date-overlay-input date-cron" data-plan="${planId}" data-datekey="${key}" value="${isoLocal(d)}"></span>`;
+
+    let html = '';
+    // Pago inicial (mes 1)
+    const dP1 = dateFor('p1', dIni);
+    html += `<tr><td>Instalación + 1er mes</td><td>${dateCell('p1',dP1)}</td><td class="mes-cell"><span class="mes-num">1</span></td><td>${fmt(m.pago1)}</td></tr>`;
+    // Cuotas de instalación (meses 2..N) · filas y fechas independientes
+    for(let i=2;i<=N;i++){
+      const di = dateFor('c'+i, addMonthsSafe(dIni,i-1));
+      html += `<tr><td>Cuota instal. + mensualidad</td><td>${dateCell('c'+i,di)}</td><td class="mes-cell"><span class="mes-num">${i}</span></td><td>${fmt(m.pago1)}</td></tr>`;
+    }
+    // Mensualidad simple · mes editable → 36
+    const dM = dateFor('mens', addMonthsSafe(dIni,mesMens-1));
+    html += `<tr><td>Mensualidad</td><td>${dateCell('mens',dM)}</td><td class="mes-cell"><input type="number" min="2" max="36" class="mes-input" data-plan="${planId}" value="${mesMens}"> <span class="mes-rest">al 36</span></td><td>${fmt(m.mensualTot)} <span class="permes">/mes</span></td></tr>`;
+    body.innerHTML = html;
+
+    // Editar fechas (no cambia montos, no re-renderiza)
+    body.querySelectorAll('.date-cron').forEach(inp=>{
+      inp.addEventListener('change',e=>{
+        const key=e.target.dataset.datekey;
+        stateM[planId].fechas[key]=e.target.value;
+        const st=e.target.parentElement.querySelector('strong');
+        if(st && e.target.value) st.textContent = fmtDateShort(new Date(e.target.value+'T00:00:00'));
+      });
+    });
+    // Editar mes de inicio de la mensualidad
+    const mesInp = body.querySelector('.mes-input');
+    if(mesInp){
+      mesInp.addEventListener('change',e=>{
+        let v=parseInt(e.target.value); if(isNaN(v)) v=N+1; v=Math.max(2,Math.min(36,v));
+        stateM[planId].mesMens=v;
+        recalcM(planId);
+      });
+    }
+  }
+  if(callout) callout.innerHTML = `<span class="callout-num">PAGO INICIAL</span> <span class="callout-val">${fmt(m.pago1)}</span>`;
+}
+
+function buildResumenM(){
+  const p = PLANES.find(x=>x.id===activePlanM);
+  const m = calcM(activePlanM);
+  const cli = $('#cli_empresa').value||'(Cliente)';
+  const num = $('#hd_cotnum').textContent;
+  const vig = fmtDateLong($('#vigenciaM').value);
+  let txt = `🚗 *Hi CAR GPS · Cotización ${num}*\n`;
+  txt += `Cliente: ${cli}\nPlan MENSUAL: *${p.name}* · Contrato 36 meses\n`;
+  txt += `Vehículos: ${m.qty} · Mensualidad U.: ${fmt(m.s.mensual)} + IVA · Instalación U.: ${fmt(m.s.instalacion)} + IVA\n\n`;
+  txt += `💰 *TOTAL MENSUAL: ${fmt(m.mensualTot)}/mes*\nInstalación (c/IVA): ${fmt(m.instalTot)}${m.N>1?` en ${m.N} cuotas de ${fmt(m.cuotaIns)}`:' (pago único)'}\n\n`;
+  txt += `📅 *PLAN DE PAGOS*\n🔵 PAGO 1 (día instalación): ${fmt(m.cuotaIns)} + ${fmt(m.mensualTot)} = *${fmt(m.pago1)}*\n`;
+  if(m.N>1) txt += `🟡 PAGOS 2 al ${m.N}: ${fmt(m.pago1)}/mes (instal. + mes)\n`;
+  txt += `🟢 PAGOS ${m.N+1} al 36: *${fmt(m.mensualTot)}/mes*\n\n`;
+  txt += `↩️ Retiro voluntario: notificar 30 días antes · desinstalación anticipada ${fmt(m.desinstTot)} ($30+IVA por equipo)\n`;
+  txt += `\n⏰ *Oferta vigente hasta: ${vig}*\nExclusivo flotas +50 vehículos\n\n`;
+  txt += `📍 Av 6 de Diciembre e Ignacio Bossano · Edif. Torre Bossano · PB\n💬 WhatsApp 24/7: +593 988 248 484`;
+  return txt;
+}
+
+function currentResumen(){ return activeTab==='mensual' ? buildResumenM() : buildResumen(); }
+function currentPhone(){ return $('#cli_telefono').value.replace(/\D/g,'')||'593988248484'; }
+
+// Cambio de pestaña
+function switchTab(t){
+  activeTab = t;
+  $$('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===t));
+  $('#tab-anual').classList.toggle('active', t==='anual');
+  $('#tab-mensual').classList.toggle('active', t==='mensual');
+}
+$$('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+
+// Vigencia mensual
+function renderVigenciaM(){const el=$('#vigenciaDispM');if(!el)return;const v=$('#vigenciaM').value;el.textContent=v?fmtDateShort(new Date(v+'T00:00:00')):'—';}
+$('#vigenciaM').addEventListener('input',renderVigenciaM);
+$('#vigenciaM').value=plus15();
+renderVigenciaM();
+
 renderSelector();
 renderPlans();
+renderSelectorM();
+renderPlansM();
 </script>
 </body>
 </html>
