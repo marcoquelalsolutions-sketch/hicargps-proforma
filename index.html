@@ -581,7 +581,8 @@ small,.small{font-size:11px;color:var(--muted)}
 .footer-info .legal strong{color:var(--brand-deep);letter-spacing:.02em}
 
 /* TABS · PLANES ANUALES / PLANES MENSUALES */
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+@media (max-width:680px){.tabs{grid-template-columns:1fr}}
 .tab-btn{
   font-family:'Space Grotesk','Inter',sans-serif;
   font-size:13px;font-weight:700;letter-spacing:.02em;
@@ -597,6 +598,57 @@ small,.small{font-size:11px;color:var(--muted)}
 .tab-btn small{display:block;font-size:9px;font-weight:600;opacity:.85;margin-top:2px;letter-spacing:.05em}
 .tab-pane{display:none}
 .tab-pane.active{display:block}
+
+/* PLANES ONE APP · TODOS CONECTADOS */
+.one-modo-toggle{display:flex;gap:8px;margin-bottom:2px}
+.one-modo-btn{flex:1;text-transform:uppercase;letter-spacing:.04em;font-size:12px}
+.one-modo-btn.active{background:var(--brand-deep);color:#fff;border-color:var(--brand-deep)}
+.one-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+@media (max-width:680px){.one-cards{grid-template-columns:1fr}}
+.one-card{
+  background:#fff;border:1.5px solid var(--line);border-radius:12px;
+  padding:12px 13px;display:flex;flex-direction:column;gap:8px;
+  border-top:4px solid var(--brand);box-shadow:var(--shadow);
+}
+.one-card[data-tier="group"]{border-top-color:var(--brand-bright)}
+.one-card[data-tier="community"]{border-top-color:var(--gold)}
+.one-card-head{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.one-card-head h3{font-size:13.5px;letter-spacing:.05em;color:var(--brand)}
+.one-card[data-tier="group"] .one-card-head h3{color:var(--brand-bright)}
+.one-card[data-tier="community"] .one-card-head h3{color:#8a6f1c}
+.one-radio-use{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;white-space:nowrap}
+.one-desc{font-size:11px;color:var(--ink-soft);line-height:1.4}
+.one-pago-toggle{display:flex;gap:6px}
+.one-pago-btn{flex:1;font-size:10px;padding:5px 6px;min-height:0}
+.one-pago-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.one-price{background:var(--brand-sky);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.one-price .op-label{font-size:9px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.05em}
+.one-price .op-val{font-family:'Space Grotesk',inherit;font-weight:800;font-size:20px;color:var(--brand-deep)}
+.one-price .op-sub{font-size:10px;color:var(--ink-soft);font-weight:600}
+.one-users{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:11px;font-weight:600;color:var(--ink-soft)}
+.one-stepper{display:flex;align-items:center;gap:6px}
+.one-step-btn{min-height:0;padding:3px 9px;font-size:13px;line-height:1}
+.one-users-fixed{font-size:12px;font-weight:700;color:var(--brand-deep);font-family:'Space Grotesk',inherit}
+.one-cred{display:flex;flex-direction:column;gap:4px}
+.one-cred-title{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.one-cred-title h4{font-size:9.5px;font-weight:700;color:var(--brand-deep);text-transform:uppercase;letter-spacing:.06em}
+.one-cred-actions{display:flex;gap:4px}
+.one-cred-actions .btn{font-size:9px;padding:3px 7px;min-height:0}
+.one-cred-table{width:100%;border-collapse:collapse;font-size:10.5px;font-variant-numeric:tabular-nums}
+.one-cred-table td{padding:3px 4px;border-bottom:1px solid var(--line);font-family:'Space Grotesk',monospace}
+.one-cred-table td.oc-email{color:var(--ink);font-weight:600}
+.one-cred-table td.oc-pass{color:var(--brand-deep);font-weight:700}
+.one-cred-table td.oc-copy{text-align:right}
+.one-cred-table td.oc-copy .btn{font-size:9px;padding:2px 7px;min-height:0;border-radius:5px}
+.one-recibo{margin-top:4px;padding-top:8px;border-top:1px dashed var(--line);font-size:10.5px;color:var(--ink-soft)}
+.one-recibo .or-line{display:flex;justify-content:space-between;gap:6px;margin-bottom:2px}
+.one-recibo .or-line strong{color:var(--brand-deep)}
+.one-recibo-firma{
+  margin-top:10px;padding-top:10px;border-top:1px solid var(--ink-soft);
+  text-align:center;font-size:9.5px;font-weight:600;color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.one-recibo-firma .orf-sub{font-size:8.5px;color:var(--muted);font-weight:500}
 
 /* Bloques de concepto (mensual) · Mensualidad / Instalación separados */
 .concept-block{margin:12px 0}
@@ -716,12 +768,31 @@ small,.small{font-size:11px;color:var(--muted)}
   .total-contrato-line{font-size:9.5px;padding:4px 9px;margin:3px 0 5px;border-radius:6px;
     -webkit-print-color-adjust:exact;print-color-adjust:exact}
   .total-contrato-line strong{font-size:12px}
+  /* PLANES ONE · 3 tarjetas + credenciales compactas + recibo visible en pdf */
+  .one-cards{grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:5px}
+  .one-card{padding:6px 7px;gap:5px;break-inside:avoid;page-break-inside:avoid;border-width:1px;box-shadow:none;border-top-width:2.5px}
+  .one-card-head h3{font-size:9.5px}
+  .one-radio-use{display:none !important}
+  .one-desc{font-size:6.8px;line-height:1.25}
+  .one-price{padding:4px 6px}
+  .one-price .op-label{font-size:6.5px}
+  .one-price .op-val{font-size:13px}
+  .one-price .op-sub{font-size:6.8px}
+  .one-users{font-size:7.5px}
+  .one-users-fixed{font-size:9px}
+  .one-cred-title h4{font-size:6.5px}
+  .one-cred{break-inside:avoid;page-break-inside:avoid}
+  .one-cred-table{font-size:7px}
+  .one-cred-table td{padding:1px 2px;border-bottom:.5px solid #dde4ee}
+  .one-recibo{font-size:7px;padding-top:4px;margin-top:2px}
+  .one-recibo-firma{font-size:6.8px;padding-top:4px;margin-top:4px}
+  .one-recibo-firma .orf-sub{font-size:6px}
   /* Mantener color en bloques clave */
   .header,.offer-banner,.calc-card,.plan-hero,
   .badge,.pill,.brand img.logo,
   .exec-table thead th,.exec-table tr.r-iva td,.exec-table tr.r-total td,
   .pagos-table thead th,.pagos-callout,
-  .contrato-meta,.header-meta .meta-line{
+  .contrato-meta,.header-meta .meta-line,.one-price{
     -webkit-print-color-adjust:exact;print-color-adjust:exact;
   }
   /* Evitar cortes en bloques críticos */
@@ -923,6 +994,7 @@ small,.small{font-size:11px;color:var(--muted)}
 <div class="tabs">
   <button class="tab-btn active" data-tab="anual">📅 Planes Anuales<small>Pago por contrato · 1 / 2 / 3 años</small></button>
   <button class="tab-btn" data-tab="mensual">🔄 Planes Mensuales<small>Contrato 36 meses · pago mensual</small></button>
+  <button class="tab-btn" data-tab="one">🔗 Planes ONE App<small>Todos Conectados</small></button>
 </div>
 
 <!-- ═══════════ PESTAÑA · PLANES ANUALES ═══════════ -->
@@ -988,6 +1060,38 @@ small,.small{font-size:11px;color:var(--muted)}
 </div>
 
 </div><!-- /tab-mensual -->
+
+<!-- ═══════════ PESTAÑA · PLANES ONE APP · TODOS CONECTADOS ═══════════ -->
+<div class="tab-pane" id="tab-one">
+
+<section class="card plan-selector-card">
+  <div class="card-title">
+    <h2>Planes ONE App · Todos Conectados</h2>
+  </div>
+  <div class="one-modo-toggle">
+    <button type="button" class="btn btn-ghost one-modo-btn active" data-modo="mensual">🔄 Mensual</button>
+    <button type="button" class="btn btn-ghost one-modo-btn" data-modo="anual">📅 Anual · 50% OFF</button>
+  </div>
+</section>
+
+<div class="one-cards" id="oneCards"></div>
+
+<div class="offer-banner">
+  <div class="seal">50%<br>OFF</div>
+  <div class="text">
+    <h3>PROMO ONE APP · 50% DE DESCUENTO</h3>
+    <p><strong>El precio anual ya incluye el 50% OFF aplicado.</strong> Después de la vigencia indicada, aplica tarifa estándar.</p>
+  </div>
+  <label class="vigencia">
+    Vigencia hasta
+    <span class="vig-wrap">
+      <strong id="vigenciaDispOne">—</strong>
+      <input type="date" class="date-overlay-input" id="vigenciaOne" aria-label="Vigencia hasta">
+    </span>
+  </label>
+</div>
+
+</div><!-- /tab-one -->
 
 <!-- ACCIONES -->
 <div class="actions">
@@ -1140,6 +1244,26 @@ let activePlanM = 'plus';   // muestra el ejemplo $1,150.00 / $287.50 al abrir l
 let activeTab = 'anual';
 const state = {};
 const stateM = {};
+
+// ── PLANES ONE APP · TODOS CONECTADOS (contado = mensual×12×0.5, crédito directo = contado×1.20) ──
+const PLANES_ONE = [
+  { id:'essential', name:'ESSENTIAL', tier:'essential', usersMin:2, usersMax:2, usersFixed:true,
+    mensual:12.50, anualContado:75, anualCredito:90, cuotasCredito:3, valorCuota:30,
+    desc:'Ubica y rastrea a tu familia o equipo en tiempo real: alertas, geocercas y botón SOS.' },
+  { id:'group', name:'GROUP', tier:'group', usersMin:3, usersMax:5, usersFixed:false,
+    mensual:25, anualContado:150, anualCredito:180, cuotasCredito:3, valorCuota:60,
+    desc:'Ubica y rastrea a tu familia o equipo en tiempo real: alertas, geocercas y botón SOS.' },
+  { id:'community', name:'COMMUNITY', tier:'community', usersMin:6, usersMax:20, usersFixed:false,
+    mensual:50, anualContado:300, anualCredito:360, cuotasCredito:3, valorCuota:120,
+    desc:'Ubica y rastrea a tu familia o equipo en tiempo real: alertas, geocercas y botón SOS.' },
+];
+state.one = {
+  modo:'mensual',
+  pago:{essential:'contado', group:'contado', community:'contado'},
+  usuarios:{essential:2, group:3, community:6},
+  credenciales:{essential:[], group:[], community:[]},
+  seleccionado:'essential',
+};
 
 const $ = sel => document.querySelector(sel);
 const $$ = sel => document.querySelectorAll(sel);
@@ -1385,12 +1509,22 @@ $('#btnReset').addEventListener('click',()=>{
     const d=MENSUAL_DEF[p.id]||{mensual:10,instalacion:30};
     stateM[p.id]={mensual:d.mensual,instalacion:d.instalacion,qty:50,cuotasInstal:1,inicio:todayISO(),fechas:{},mesMens:2};
   });
+  state.one = {
+    modo:'mensual',
+    pago:{essential:'contado', group:'contado', community:'contado'},
+    usuarios:{essential:2, group:3, community:6},
+    credenciales:{essential:[], group:[], community:[]},
+    seleccionado:'essential',
+  };
+  $$('.one-modo-btn').forEach(x=>x.classList.toggle('active', x.dataset.modo==='mensual'));
   $('#vigencia').value=plus15();renderVigencia();
   $('#vigenciaM').value=plus15();renderVigenciaM();
+  $('#vigenciaOne').value=plus15();renderVigenciaOne();
   $('#hd_cotnum').textContent=defaultCotNum();
   $('#hd_fecha').textContent=fmtDateLong(todayISO());
   renderPlans();
   renderPlansM();
+  renderPlansOne();
 });
 
 $('#hd_cotnum').textContent=defaultCotNum();
@@ -1671,7 +1805,199 @@ function buildResumenM(){
   return txt;
 }
 
-function currentResumen(){ return activeTab==='mensual' ? buildResumenM() : buildResumen(); }
+/* ═══════════════════ PLANES ONE APP · TODOS CONECTADOS ═══════════════════ */
+const SILABAS_ONE = ['ma','ri','lo','ka','ti','su','ne','pa','vi','ro','da','fe','lu','sa','to','ga','be','ce','no','mi'];
+function generarPasswordOne(){
+  const s1 = SILABAS_ONE[Math.floor(Math.random()*SILABAS_ONE.length)];
+  const s2 = SILABAS_ONE[Math.floor(Math.random()*SILABAS_ONE.length)];
+  const dig = String(Math.floor(Math.random()*90+10));
+  return (s1+s2+dig).slice(0,6);
+}
+function slugEmpresaOne(){
+  const emp = ($('#cli_empresa').value||'').trim();
+  if(!emp) return 'usuario';
+  const slug = emp.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s]/g,'').trim().split(/\s+/).slice(0,2).join('');
+  return slug || 'usuario';
+}
+function generarCredencialesOne(planId){
+  const n = state.one.usuarios[planId];
+  const slug = slugEmpresaOne();
+  const arr = [];
+  for(let i=1;i<=n;i++){
+    arr.push({ email:`${slug}${String(i).padStart(2,'0')}@hicargps.com`, pass: generarPasswordOne() });
+  }
+  state.one.credenciales[planId] = arr;
+}
+function renderCredencialesOne(planId){
+  const tbody = document.getElementById('oneCredBody_'+planId);
+  if(!tbody) return;
+  tbody.innerHTML = state.one.credenciales[planId].map((c,i)=>`
+    <tr>
+      <td class="oc-email">${c.email}</td>
+      <td class="oc-pass">${c.pass}</td>
+      <td class="oc-copy"><button type="button" class="btn oc-copy-row" data-plan="${planId}" data-idx="${i}">Copiar</button></td>
+    </tr>`).join('');
+}
+function recalcOne(planId){
+  const p = PLANES_ONE.find(x=>x.id===planId);
+  const s = state.one;
+  let total, sub, formaPago;
+  if(s.modo==='mensual'){
+    total = p.mensual; sub = 'Tarifa mensual recurrente'; formaPago = 'Mensual (recurrente)';
+  } else if(s.pago[planId]==='credito'){
+    total = p.anualCredito; sub = `Crédito directo · ${p.cuotasCredito} pagos de ${fmt(p.valorCuota)}`; formaPago = `Crédito Directo · ${p.cuotasCredito} pagos de ${fmt(p.valorCuota)}`;
+  } else {
+    total = p.anualContado; sub = 'Pago de contado · precio anual (50% OFF ya aplicado)'; formaPago = 'Contado (anual)';
+  }
+  const valEl = document.getElementById('oneVal_'+planId);
+  const subEl = document.getElementById('oneSub_'+planId);
+  if(valEl) valEl.textContent = fmt(total) + (s.modo==='mensual' ? '/mes' : '/año');
+  if(subEl) subEl.textContent = sub;
+  const rTot = document.getElementById('oneReciboTotal_'+planId);
+  const rForma = document.getElementById('oneReciboForma_'+planId);
+  const rFecha = document.getElementById('oneReciboFecha_'+planId);
+  if(rTot) rTot.textContent = fmt(total) + (s.modo==='mensual'?'/mes':'');
+  if(rForma) rForma.textContent = formaPago;
+  if(rFecha) rFecha.textContent = fmtDateLong(todayISO());
+}
+function renderPlansOne(){
+  const c = $('#oneCards');
+  const s = state.one;
+  c.innerHTML = PLANES_ONE.map(p=>{
+    const usersBlock = p.usersFixed
+      ? `<div class="one-users"><span>Usuarios incluidos</span><span class="one-users-fixed">${p.usersMin} usuarios</span></div>`
+      : `<div class="one-users"><span>Usuarios activos</span>
+           <div class="one-stepper">
+             <button type="button" class="btn one-step-btn" data-plan="${p.id}" data-step="-1">−</button>
+             <span class="one-users-fixed" id="oneUsersVal_${p.id}">${s.usuarios[p.id]}</span>
+             <button type="button" class="btn one-step-btn" data-plan="${p.id}" data-step="1">+</button>
+           </div>
+         </div>`;
+    const pagoToggle = s.modo==='anual' ? `
+      <div class="one-pago-toggle">
+        <button type="button" class="btn one-pago-btn ${s.pago[p.id]==='contado'?'active':''}" data-plan="${p.id}" data-pago="contado">Contado</button>
+        <button type="button" class="btn one-pago-btn ${s.pago[p.id]==='credito'?'active':''}" data-plan="${p.id}" data-pago="credito">Crédito Directo</button>
+      </div>` : '';
+    return `
+      <div class="one-card" data-tier="${p.tier}">
+        <div class="one-card-head">
+          <h3>${p.name}</h3>
+          <label class="one-radio-use">
+            <input type="radio" name="oneSeleccionado" value="${p.id}" ${s.seleccionado===p.id?'checked':''}> usar en resumen
+          </label>
+        </div>
+        <div class="one-desc">${p.desc}</div>
+        ${pagoToggle}
+        <div class="one-price">
+          <span class="op-label">Total</span>
+          <span class="op-val" id="oneVal_${p.id}">—</span>
+          <span class="op-sub" id="oneSub_${p.id}">—</span>
+        </div>
+        ${usersBlock}
+        <div class="one-cred">
+          <div class="one-cred-title">
+            <h4>Credenciales de acceso</h4>
+            <div class="one-cred-actions">
+              <button type="button" class="btn one-cred-regen" data-plan="${p.id}">↺ Regenerar</button>
+              <button type="button" class="btn one-cred-copyall" data-plan="${p.id}">Copiar todo</button>
+            </div>
+          </div>
+          <table class="one-cred-table"><tbody id="oneCredBody_${p.id}"></tbody></table>
+        </div>
+        <div class="one-recibo">
+          <div class="or-line"><span>Recibí conforme</span><strong id="oneReciboTotal_${p.id}">—</strong></div>
+          <div class="or-line"><span>Forma de pago</span><strong id="oneReciboForma_${p.id}">—</strong></div>
+          <div class="or-line"><span>Fecha</span><strong id="oneReciboFecha_${p.id}">—</strong></div>
+        </div>
+        <div class="one-recibo-firma">
+          <span>Firma del Cliente</span>
+          <span class="orf-sub">Nombre · Cargo</span>
+        </div>
+      </div>`;
+  }).join('');
+
+  PLANES_ONE.forEach(p=>{
+    if(!state.one.credenciales[p.id] || !state.one.credenciales[p.id].length) generarCredencialesOne(p.id);
+    renderCredencialesOne(p.id);
+    recalcOne(p.id);
+  });
+
+  $$('#oneCards .one-step-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const id=b.dataset.plan, dir=parseInt(b.dataset.step);
+      const p=PLANES_ONE.find(x=>x.id===id);
+      let n=(state.one.usuarios[id]||p.usersMin)+dir;
+      n=Math.max(p.usersMin,Math.min(p.usersMax,n));
+      state.one.usuarios[id]=n;
+      generarCredencialesOne(id);
+      const el=document.getElementById('oneUsersVal_'+id); if(el) el.textContent=n;
+      renderCredencialesOne(id);
+    });
+  });
+  $$('#oneCards .one-pago-btn').forEach(b=>{
+    b.addEventListener('click',()=>{ state.one.pago[b.dataset.plan]=b.dataset.pago; renderPlansOne(); });
+  });
+  $$('#oneCards .one-cred-regen').forEach(b=>{
+    b.addEventListener('click',()=>{ generarCredencialesOne(b.dataset.plan); renderCredencialesOne(b.dataset.plan); });
+  });
+  $$('#oneCards .one-cred-copyall').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const id=b.dataset.plan;
+      const txt = state.one.credenciales[id].map(cr=>`${cr.email} · ${cr.pass}`).join('\n');
+      navigator.clipboard.writeText(txt).then(()=>{ const o=b.innerHTML; b.innerHTML='✓ Copiado'; setTimeout(()=>b.innerHTML=o,1800); });
+    });
+  });
+  $$('#oneCards .oc-copy-row').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const id=b.dataset.plan, idx=parseInt(b.dataset.idx);
+      const cr=state.one.credenciales[id][idx];
+      navigator.clipboard.writeText(`${cr.email} · ${cr.pass}`).then(()=>{ const o=b.textContent; b.textContent='✓'; setTimeout(()=>b.textContent=o,1200); });
+    });
+  });
+  $$('input[name="oneSeleccionado"]').forEach(r=>{
+    r.addEventListener('change',()=>{ state.one.seleccionado=r.value; });
+  });
+}
+$$('.one-modo-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    state.one.modo = b.dataset.modo;
+    $$('.one-modo-btn').forEach(x=>x.classList.toggle('active', x===b));
+    renderPlansOne();
+  });
+});
+function buildResumenOne(){
+  const id = state.one.seleccionado;
+  const p = PLANES_ONE.find(x=>x.id===id);
+  const s = state.one;
+  const cli = $('#cli_empresa').value||'(Cliente)';
+  const num = $('#hd_cotnum').textContent;
+  const vig = fmtDateLong($('#vigenciaOne').value);
+  let total, formaPago;
+  if(s.modo==='mensual'){ total=p.mensual; formaPago='Mensual (recurrente)'; }
+  else if(s.pago[id]==='credito'){ total=p.anualCredito; formaPago=`Crédito Directo · ${p.cuotasCredito} pagos de ${fmt(p.valorCuota)}`; }
+  else { total=p.anualContado; formaPago='Contado (anual)'; }
+  const usuarios = s.usuarios[id];
+  let txt = `🚗 *Hi CAR GPS · Cotización ${num}*\n`;
+  txt += `Cliente: ${cli}\nPlan ONE App: *${p.name}* · Todos Conectados\n`;
+  txt += `Modo: ${s.modo==='mensual'?'Mensual':'Anual'} · Forma de pago: ${formaPago}\n`;
+  txt += `Usuarios activos: ${usuarios}\n\n`;
+  txt += `💰 *TOTAL: ${fmt(total)}${s.modo==='mensual'?'/mes':'/año'}*\n\n`;
+  txt += `🔐 *Credenciales de acceso*\n`;
+  (s.credenciales[id]||[]).forEach(cr=>{ txt += `${cr.email} · ${cr.pass}\n`; });
+  txt += `\n⏰ *Promo 50% OFF vigente hasta: ${vig}*\n\n`;
+  txt += `📍 Av 6 de Diciembre e Ignacio Bossano · Edif. Torre Bossano · PB\n💬 WhatsApp 24/7: +593 988 248 484`;
+  return txt;
+}
+function renderVigenciaOne(){const el=$('#vigenciaDispOne');if(!el)return;const v=$('#vigenciaOne').value;el.textContent=v?fmtDateShort(new Date(v+'T00:00:00')):'—';}
+$('#vigenciaOne').addEventListener('input',renderVigenciaOne);
+$('#vigenciaOne').value=plus15();
+renderVigenciaOne();
+
+function currentResumen(){
+  if(activeTab==='mensual') return buildResumenM();
+  if(activeTab==='one') return buildResumenOne();
+  return buildResumen();
+}
 function currentPhone(){ return $('#cli_telefono').value.replace(/\D/g,'')||'593988248484'; }
 
 // Cambio de pestaña
@@ -1680,6 +2006,7 @@ function switchTab(t){
   $$('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===t));
   $('#tab-anual').classList.toggle('active', t==='anual');
   $('#tab-mensual').classList.toggle('active', t==='mensual');
+  $('#tab-one').classList.toggle('active', t==='one');
 }
 $$('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
 
@@ -1693,6 +2020,7 @@ renderSelector();
 renderPlans();
 renderSelectorM();
 renderPlansM();
+renderPlansOne();
 </script>
 </body>
 </html>
