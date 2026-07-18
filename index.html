@@ -610,15 +610,23 @@ small,.small{font-size:11px;color:var(--muted)}
   background:#fff;border:1.5px solid var(--line);border-radius:12px;
   padding:12px 13px;display:flex;flex-direction:column;gap:8px;
   border-top:4px solid var(--brand);box-shadow:var(--shadow);
-  min-width:0;overflow:hidden;
+  min-width:0;overflow:hidden;transition:box-shadow .15s,border-color .15s;
 }
 .one-card[data-tier="group"]{border-top-color:var(--brand-bright)}
 .one-card[data-tier="community"]{border-top-color:var(--gold)}
+.one-card.selected{border-color:var(--ok);box-shadow:0 0 0 2px rgba(31,157,85,.22),var(--shadow-lg)}
 .one-card-head{display:flex;align-items:center;justify-content:space-between;gap:6px}
 .one-card-head h3{font-size:13.5px;letter-spacing:.05em;color:var(--brand)}
 .one-card[data-tier="group"] .one-card-head h3{color:var(--brand-bright)}
 .one-card[data-tier="community"] .one-card-head h3{color:#8a6f1c}
-.one-radio-use{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;white-space:nowrap}
+.one-selected-badge{display:flex;align-items:center;gap:3px;font-size:9.5px;font-weight:800;color:var(--ok);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.one-select-btn{font-size:9.5px;padding:4px 9px;min-height:0;white-space:nowrap}
+.one-export-hint{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  background:var(--brand-sky);border:1px solid var(--line);border-radius:8px;
+  padding:7px 11px;margin-top:8px;font-size:11px;font-weight:600;color:var(--ink-soft);
+}
+.one-export-hint strong{color:var(--ok);text-transform:uppercase;letter-spacing:.03em;font-weight:800}
 .one-desc{font-size:11px;color:var(--ink-soft);line-height:1.4}
 .one-pago-toggle{display:flex;gap:6px}
 .one-pago-btn{flex:1;font-size:10px;padding:5px 6px;min-height:0}
@@ -771,7 +779,7 @@ small,.small{font-size:11px;color:var(--muted)}
   .one-cards{grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:5px}
   .one-card{padding:7px 10px;gap:6px;break-inside:avoid;page-break-inside:avoid;border-width:1px;box-shadow:none;border-top-width:2.5px}
   .one-card-head h3{font-size:12px}
-  .one-radio-use{display:none !important}
+  .one-selected-badge{font-size:8px}
   .one-desc{font-size:8px;line-height:1.3}
   .one-price{padding:5px 8px}
   .one-price .op-label{font-size:7.5px}
@@ -1077,6 +1085,7 @@ small,.small{font-size:11px;color:var(--muted)}
     <button type="button" class="btn btn-ghost one-modo-btn one-doc-btn active" data-doc="proforma">📄 Proforma</button>
     <button type="button" class="btn btn-ghost one-modo-btn one-doc-btn" data-doc="recibo">🧾 Recibo de Pago</button>
   </div>
+  <div class="one-export-hint">📄 Se incluirá en el PDF y WhatsApp: <strong id="oneExportLabel">ESSENTIAL</strong></div>
 </section>
 
 <div class="one-cards" id="oneCards"></div>
@@ -1911,21 +1920,23 @@ function renderPlansOne(){
             </div>
           </div>
         </div>` : '';
+    const isSel = s.seleccionado===p.id;
+    const selectControl = isSel
+      ? `<span class="one-selected-badge">✓ Seleccionado</span>`
+      : `<button type="button" class="btn one-select-btn" data-plan="${p.id}">Elegir para PDF</button>`;
     return `
-      <div class="one-card" data-tier="${p.tier}" data-selected="${s.seleccionado===p.id}">
+      <div class="one-card ${isSel?'selected':''}" data-tier="${p.tier}" data-selected="${isSel}">
         <div class="one-card-head">
           <h3>${p.name}</h3>
-          <label class="one-radio-use">
-            <input type="radio" name="oneSeleccionado" value="${p.id}" ${s.seleccionado===p.id?'checked':''}> usar en PDF/resumen
-          </label>
+          ${selectControl}
         </div>
-        <div class="one-desc">${p.desc}</div>
-        ${pagoToggle}
         <div class="one-price">
           <span class="op-label">Total</span>
           <span class="op-val" id="oneVal_${p.id}">—</span>
           <span class="op-sub" id="oneSub_${p.id}">—</span>
         </div>
+        <div class="one-desc">${p.desc}</div>
+        ${pagoToggle}
         ${usersBlock}
         <div class="one-cred">
           <div class="one-cred-title">
@@ -1986,9 +1997,11 @@ function renderPlansOne(){
       state.one.comprobante[id][field] = el.value;
     });
   });
-  $$('input[name="oneSeleccionado"]').forEach(r=>{
-    r.addEventListener('change',()=>{ state.one.seleccionado=r.value; renderPlansOne(); });
+  $$('#oneCards .one-select-btn').forEach(b=>{
+    b.addEventListener('click',()=>{ state.one.seleccionado=b.dataset.plan; renderPlansOne(); });
   });
+  const hintEl = document.getElementById('oneExportLabel');
+  if(hintEl){ const sp=PLANES_ONE.find(x=>x.id===s.seleccionado); hintEl.textContent = sp ? sp.name : '—'; }
 }
 $$('.one-modo-btn[data-modo]').forEach(b=>{
   b.addEventListener('click',()=>{
