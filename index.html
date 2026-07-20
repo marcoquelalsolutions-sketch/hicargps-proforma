@@ -627,7 +627,14 @@ small,.small{font-size:11px;color:var(--muted)}
   padding:7px 11px;margin-top:8px;font-size:11px;font-weight:600;color:var(--ink-soft);
 }
 .one-export-hint strong{color:var(--ok);text-transform:uppercase;letter-spacing:.03em;font-weight:800}
-.one-desc{font-size:11px;color:var(--ink-soft);line-height:1.4}
+.one-benefits{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.one-benefits li{display:flex;align-items:flex-start;gap:7px;font-size:12.5px;color:var(--ink);font-weight:500;line-height:1.35}
+.one-benefits .ob-icon{font-size:16px;line-height:1.2;flex-shrink:0}
+.one-benefits strong{color:var(--brand-deep)}
+.one-vigencia{display:flex;gap:14px;background:var(--brand-sky);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.one-vigencia .ov-item{display:flex;flex-direction:column;gap:2px;flex:1}
+.one-vigencia .ov-item span{font-size:9px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.05em}
+.one-vigencia .ov-item strong{font-family:'Space Grotesk',inherit;font-weight:700;font-size:13px;color:var(--brand-deep)}
 .one-pago-toggle{display:flex;gap:6px}
 .one-pago-btn{flex:1;font-size:10px;padding:5px 6px;min-height:0}
 .one-pago-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
@@ -780,11 +787,16 @@ small,.small{font-size:11px;color:var(--muted)}
   .one-card{padding:7px 10px;gap:6px;break-inside:avoid;page-break-inside:avoid;border-width:1px;box-shadow:none;border-top-width:2.5px}
   .one-card-head h3{font-size:12px}
   .one-selected-badge{font-size:8px}
-  .one-desc{font-size:8px;line-height:1.3}
   .one-price{padding:5px 8px}
   .one-price .op-label{font-size:7.5px}
   .one-price .op-val{font-size:15px}
   .one-price .op-sub{font-size:8px}
+  .one-benefits{gap:2.5px}
+  .one-benefits li{font-size:8px;gap:4px;line-height:1.25}
+  .one-benefits .ob-icon{font-size:9px}
+  .one-vigencia{padding:4px 7px;gap:8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .one-vigencia .ov-item span{font-size:6.5px}
+  .one-vigencia .ov-item strong{font-size:9.5px}
   .one-users{font-size:9px}
   .one-users-fixed{font-size:10.5px}
   .one-cred-title h4{font-size:7.5px}
@@ -795,6 +807,7 @@ small,.small{font-size:11px;color:var(--muted)}
   .one-recibo .grid{gap:5px}
   .one-recibo .field label{font-size:7px}
   .one-recibo .field input,.one-recibo .field select{font-size:9.5px;min-height:0;padding:1px 0}
+  .one-recibo .field input[type="date"]::-webkit-calendar-picker-indicator{display:none}
   /* Mantener color en bloques clave */
   .header,.offer-banner,.calc-card,.plan-hero,
   .badge,.pill,.brand img.logo,
@@ -1262,20 +1275,25 @@ const stateM = {};
 // ── PLANES ONE APP · TODOS CONECTADOS (contado = mensual×12×0.5, crédito directo = contado×1.20) ──
 const PLANES_ONE = [
   { id:'essential', name:'ESSENTIAL', tier:'essential', usersMin:2, usersMax:2, usersFixed:true,
-    mensual:12.50, anualContado:75, anualCredito:90, cuotasCredito:3, valorCuota:30,
-    desc:'Ubica y rastrea a tu familia o equipo en tiempo real: alertas, geocercas y botón SOS.' },
+    mensual:12.50, anualContado:75, anualCredito:90, cuotasCredito:3, valorCuota:30 },
   { id:'group', name:'GROUP', tier:'group', usersMin:3, usersMax:5, usersFixed:false,
-    mensual:25, anualContado:150, anualCredito:180, cuotasCredito:3, valorCuota:60,
-    desc:'Ubica y rastrea a tu familia o equipo en tiempo real: alertas, geocercas y botón SOS.' },
+    mensual:25, anualContado:150, anualCredito:180, cuotasCredito:3, valorCuota:60 },
   { id:'community', name:'COMMUNITY', tier:'community', usersMin:6, usersMax:20, usersFixed:false,
-    mensual:50, anualContado:300, anualCredito:360, cuotasCredito:3, valorCuota:120,
-    desc:'Ubica y rastrea a tu familia o equipo en tiempo real: alertas, geocercas y botón SOS.' },
+    mensual:50, anualContado:300, anualCredito:360, cuotasCredito:3, valorCuota:120 },
+];
+const ONE_BENEFICIOS = [
+  { icon:'🔗', text:'<strong>ONE.</strong> Una App. Todos Conectados.' },
+  { icon:'📍', text:'Rastrea a tu familia o equipo en tiempo real' },
+  { icon:'🔔', text:'Alertas, geocercas y botón SOS' },
+  { icon:'🕓', text:'Histórico completo de trayectos' },
+  { icon:'📲', text:'Notificaciones instantáneas al llegar o salir (casa, trabajo, escuela)' },
 ];
 state.one = {
   modo:'mensual',
   tipoDoc:'proforma',
   pago:{essential:'contado', group:'contado', community:'contado'},
   usuarios:{essential:2, group:3, community:6},
+  fechaInicio:{essential:null, group:null, community:null},
   credenciales:{essential:[], group:[], community:[]},
   comprobante:{essential:null, group:null, community:null},
   seleccionado:'essential',
@@ -1877,6 +1895,18 @@ function recalcOne(planId){
   if(subEl) subEl.textContent = sub;
   if(!s.comprobante[planId]) s.comprobante[planId] = compDefaultOne();
   if(s.comprobante[planId].monto==null || s.comprobante[planId].monto==='') s.comprobante[planId].monto = total.toFixed(2);
+  if(!s.fechaInicio[planId]) s.fechaInicio[planId] = todayISO();
+  const iniEl = document.getElementById('oneFechaIniDisp_'+planId);
+  const finEl = document.getElementById('oneFechaFin_'+planId);
+  if(iniEl) iniEl.textContent = fmtDateShort(new Date(s.fechaInicio[planId]+'T00:00:00'));
+  if(finEl){
+    if(s.modo==='anual'){
+      const dFin = new Date(s.fechaInicio[planId]+'T00:00:00'); dFin.setMonth(dFin.getMonth()+12); dFin.setDate(dFin.getDate()-1);
+      finEl.textContent = fmtDateShort(dFin);
+    } else {
+      finEl.textContent = 'Recurrente';
+    }
+  }
 }
 function renderPlansOne(){
   const c = $('#oneCards');
@@ -1935,9 +1965,24 @@ function renderPlansOne(){
           <span class="op-val" id="oneVal_${p.id}">—</span>
           <span class="op-sub" id="oneSub_${p.id}">—</span>
         </div>
-        <div class="one-desc">${p.desc}</div>
+        <ul class="one-benefits">
+          ${ONE_BENEFICIOS.map(b=>`<li><span class="ob-icon">${b.icon}</span><span>${b.text}</span></li>`).join('')}
+        </ul>
+        <div class="one-vigencia">
+          <div class="ov-item cm-edit">
+            <span>Inicio</span>
+            <strong id="oneFechaIniDisp_${p.id}">—</strong>
+            <em class="edit-mark">✎</em>
+            <input type="date" class="date-overlay-input one-fecha-ini" data-plan="${p.id}" value="${s.fechaInicio[p.id]||todayISO()}" aria-label="Fecha de inicio">
+          </div>
+          <div class="ov-item">
+            <span>Vigencia</span>
+            <strong id="oneFechaFin_${p.id}">—</strong>
+          </div>
+        </div>
         ${pagoToggle}
         ${usersBlock}
+        ${s.tipoDoc==='recibo' ? `
         <div class="one-cred">
           <div class="one-cred-title">
             <h4>Credenciales de acceso</h4>
@@ -1947,7 +1992,7 @@ function renderPlansOne(){
             </div>
           </div>
           <table class="one-cred-table"><tbody id="oneCredBody_${p.id}"></tbody></table>
-        </div>
+        </div>` : ''}
         ${comprobanteBlock}
       </div>`;
   }).join('');
@@ -1997,6 +2042,12 @@ function renderPlansOne(){
       state.one.comprobante[id][field] = el.value;
     });
   });
+  $$('#oneCards .one-fecha-ini').forEach(el=>{
+    el.addEventListener('input',()=>{
+      state.one.fechaInicio[el.dataset.plan] = el.value;
+      recalcOne(el.dataset.plan);
+    });
+  });
   $$('#oneCards .one-select-btn').forEach(b=>{
     b.addEventListener('click',()=>{ state.one.seleccionado=b.dataset.plan; renderPlansOne(); });
   });
@@ -2033,10 +2084,17 @@ function buildResumenOne(){
   const usuarios = s.usuarios[id];
   const esRecibo = s.tipoDoc==='recibo';
   const comp = s.comprobante[id] || {};
+  const fechaIni = fmtDateLong(s.fechaInicio[id]);
+  let fechaFin = 'Recurrente';
+  if(s.modo==='anual'){
+    const dFin = new Date((s.fechaInicio[id]||todayISO())+'T00:00:00'); dFin.setMonth(dFin.getMonth()+12); dFin.setDate(dFin.getDate()-1);
+    fechaFin = fmtDateLong(dFin.toISOString().slice(0,10));
+  }
   let txt = `🚗 *Hi CAR GPS · ${esRecibo?'Recibo de Pago':'Cotización'} ${num}*\n`;
   txt += `Cliente: ${cli}\nPlan ONE App: *${p.name}* · Todos Conectados\n`;
   txt += `Modo: ${s.modo==='mensual'?'Mensual':'Anual'} · Forma de pago: ${formaPago}\n`;
-  txt += `Usuarios activos: ${usuarios}\n\n`;
+  txt += `Usuarios activos: ${usuarios}\n`;
+  txt += `Vigencia: ${fechaIni} → ${fechaFin}\n\n`;
   txt += `💰 *TOTAL: ${fmt(total)}${s.modo==='mensual'?'/mes':'/año'}*\n\n`;
   if(esRecibo){
     txt += `🧾 *RECIBO DE PAGO*\n`;
@@ -2044,10 +2102,11 @@ function buildResumenOne(){
     txt += `Método de pago: ${comp.metodo||'—'}\n`;
     txt += `N° Comprobante: ${comp.referencia||'—'}\n`;
     txt += `Fecha de pago: ${fmtDateLong(comp.fecha)}\n\n`;
+    txt += `🔐 *Credenciales de acceso*\n`;
+    (s.credenciales[id]||[]).forEach(cr=>{ txt += `${cr.email} · ${cr.pass}\n`; });
+    txt += `\n`;
   }
-  txt += `🔐 *Credenciales de acceso*\n`;
-  (s.credenciales[id]||[]).forEach(cr=>{ txt += `${cr.email} · ${cr.pass}\n`; });
-  txt += `\n⏰ *Promo 50% OFF vigente hasta: ${vig}*\n\n`;
+  txt += `⏰ *Promo 50% OFF vigente hasta: ${vig}*\n\n`;
   txt += `📍 Av 6 de Diciembre e Ignacio Bossano · Edif. Torre Bossano · PB\n💬 WhatsApp 24/7: +593 988 248 484`;
   return txt;
 }
